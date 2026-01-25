@@ -1,4 +1,8 @@
 package br.com.alura.adopet.api.exception;
 
-public class CadastrarTutorValidacaoException {
+public class CadastrarTutorValidacaoException extends RuntimeException {
+
+    public CadastrarTutorValidacaoException(String message) {
+        super(message);
+    }
 }
