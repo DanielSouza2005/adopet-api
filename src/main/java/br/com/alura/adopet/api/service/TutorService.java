@@ -1,5 +1,7 @@
 package br.com.alura.adopet.api.service;
 
+import br.com.alura.adopet.api.dto.AtualizacaoTutorDto;
+import br.com.alura.adopet.api.dto.CadastroTutorDto;
 import br.com.alura.adopet.api.exception.CadastrarTutorValidacaoException;
 import br.com.alura.adopet.api.model.Tutor;
 import br.com.alura.adopet.api.repository.TutorRepository;
@@ -12,9 +14,9 @@ public class TutorService {
     @Autowired
     private TutorRepository repository;
 
-    public void cadastrar(Tutor tutor) {
-        boolean telefoneJaCadastrado = repository.existsByTelefone(tutor.getTelefone());
-        boolean emailJaCadastrado = repository.existsByEmail(tutor.getEmail());
+    public void cadastrar(CadastroTutorDto cadastroTutorDto) {
+        boolean telefoneJaCadastrado = repository.existsByTelefone(cadastroTutorDto.telefone());
+        boolean emailJaCadastrado = repository.existsByEmail(cadastroTutorDto.email());
 
         if (telefoneJaCadastrado) {
             throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse telefone.");
@@ -24,12 +26,16 @@ public class TutorService {
             throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse email.");
         }
 
+        Tutor tutor = new Tutor();
+        tutor.setNome(cadastroTutorDto.nome());
+        tutor.setEmail(cadastroTutorDto.email());
+        tutor.setTelefone(cadastroTutorDto.telefone());
         repository.save(tutor);
     }
 
-    public void atualizar(Tutor tutor) {
-        boolean telefoneJaCadastrado = repository.existsByTelefone(tutor.getTelefone());
-        boolean emailJaCadastrado = repository.existsByEmail(tutor.getEmail());
+    public void atualizar(AtualizacaoTutorDto atualizacaoTutorDto) {
+        boolean telefoneJaCadastrado = repository.existsByTelefone(atualizacaoTutorDto.telefone());
+        boolean emailJaCadastrado = repository.existsByEmail(atualizacaoTutorDto.email());
 
         if (telefoneJaCadastrado) {
             throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse telefone.");
@@ -39,6 +45,8 @@ public class TutorService {
             throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse email.");
         }
 
-        repository.save(tutor);
+        Tutor tutor = repository.getReferenceById(atualizacaoTutorDto.idTutor());
+        tutor.setTelefone(atualizacaoTutorDto.telefone());
+        tutor.setEmail(atualizacaoTutorDto.email());
     }
 }

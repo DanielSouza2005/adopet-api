@@ -1,5 +1,9 @@
 package br.com.alura.adopet.api.controller;
 
+import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
+import br.com.alura.adopet.api.dto.CadastroPetDto;
+import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
+import br.com.alura.adopet.api.dto.DadosDetalhesPet;
 import br.com.alura.adopet.api.exception.CadastrarAbrigoValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
@@ -22,15 +26,15 @@ public class AbrigoController {
     private AbrigoService service;
 
     @GetMapping
-    public ResponseEntity<List<Abrigo>> listar() {
+    public ResponseEntity<List<DadosDetalhesAbrigo>> listar() {
         return ResponseEntity.ok(service.listar());
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<String> cadastrar(@RequestBody @Valid Abrigo abrigo) {
+    public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroAbrigoDto cadastroAbrigoDto) {
         try {
-            service.cadastrar(abrigo);
+            service.cadastrar(cadastroAbrigoDto);
             return ResponseEntity.ok("Abrigo cadastrado com sucesso.");
         } catch (CadastrarAbrigoValidacaoException ex) {
             return ResponseEntity.badRequest().body(ex.getMessage());
@@ -38,7 +42,7 @@ public class AbrigoController {
     }
 
     @GetMapping("/{idOuNome}/pets")
-    public ResponseEntity<List<Pet>> listarPets(@PathVariable String idOuNome) {
+    public ResponseEntity<List<DadosDetalhesPet>> listarPets(@PathVariable String idOuNome) {
         try {
             return ResponseEntity.ok(service.listarPets(idOuNome));
         } catch (EntityNotFoundException ex) {
@@ -48,9 +52,9 @@ public class AbrigoController {
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
-    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid Pet pet) {
+    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid CadastroPetDto cadastroPetDto) {
         try {
-            service.cadastrarPet(idOuNome, pet);
+            service.cadastrarPet(idOuNome, cadastroPetDto);
             return ResponseEntity.ok("Pet cadastrado com sucesso.");
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
