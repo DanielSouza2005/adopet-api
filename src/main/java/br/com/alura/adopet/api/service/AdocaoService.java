@@ -10,7 +10,8 @@ import br.com.alura.adopet.api.model.Tutor;
 import br.com.alura.adopet.api.repository.AdocaoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
 import br.com.alura.adopet.api.repository.TutorRepository;
-import br.com.alura.adopet.api.validation.ValidacaoSolicitacaoAdocao;
+import br.com.alura.adopet.api.validation.adocao.ValidacaoSolicitacaoAdocao;
+import br.com.alura.adopet.api.validation.tutor.ValidacaoCadastroTutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,9 +41,7 @@ public class AdocaoService {
         Pet pet = petRepository.getReferenceById(solicitacaoAdocaoDto.idPet());
         Tutor tutor = tutorRepository.getReferenceById(solicitacaoAdocaoDto.idTutor());
 
-        validacoesSolicitacaoAdocao.forEach(v -> {
-            v.validar(solicitacaoAdocaoDto);
-        });
+        validacoesSolicitacaoAdocao.forEach(v -> v.validar(solicitacaoAdocaoDto));
 
         Adocao adocao = new Adocao();
         adocao.setPet(pet);

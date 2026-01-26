@@ -4,11 +4,11 @@ import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
 import br.com.alura.adopet.api.dto.CadastroPetDto;
 import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
 import br.com.alura.adopet.api.dto.DadosDetalhesPet;
-import br.com.alura.adopet.api.exception.CadastrarAbrigoValidacaoException;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
+import br.com.alura.adopet.api.validation.abrigo.ValidacaoCadastroAbrigo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +23,9 @@ public class AbrigoService {
     @Autowired
     private PetRepository petRepository;
 
+    @Autowired
+    List<ValidacaoCadastroAbrigo> validacoesCadastroAbrigo;
+
     public List<DadosDetalhesAbrigo> listar() {
         return repository.findAll()
                 .stream()
@@ -31,21 +34,7 @@ public class AbrigoService {
     }
 
     public void cadastrar(CadastroAbrigoDto cadastroAbrigoDto) {
-        boolean nomeJaCadastrado = repository.existsByNome(cadastroAbrigoDto.nome());
-        boolean telefoneJaCadastrado = repository.existsByTelefone(cadastroAbrigoDto.telefone());
-        boolean emailJaCadastrado = repository.existsByEmail(cadastroAbrigoDto.email());
-
-        if (nomeJaCadastrado) {
-            throw new CadastrarAbrigoValidacaoException("Abrigo já cadastrado com esse nome.");
-        }
-
-        if (telefoneJaCadastrado) {
-            throw new CadastrarAbrigoValidacaoException("Abrigo já cadastrado com esse telefone.");
-        }
-
-        if (emailJaCadastrado) {
-            throw new CadastrarAbrigoValidacaoException("Abrigo já cadastrado com esse email.");
-        }
+        validacoesCadastroAbrigo.forEach(v -> v.validar(cadastroAbrigoDto));
 
         Abrigo abrigo = new Abrigo();
         abrigo.setEmail(cadastroAbrigoDto.email());

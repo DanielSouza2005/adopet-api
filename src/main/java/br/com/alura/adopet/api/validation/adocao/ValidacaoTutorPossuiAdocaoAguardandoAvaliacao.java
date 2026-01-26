@@ -1,4 +1,4 @@
-package br.com.alura.adopet.api.validation;
+package br.com.alura.adopet.api.validation.adocao;
 
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
 import br.com.alura.adopet.api.exception.SolicitacaoAdocaoValidacaoException;
@@ -8,18 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidacaoTutorLimiteMaximoAdocoes implements ValidacaoSolicitacaoAdocao {
+public class ValidacaoTutorPossuiAdocaoAguardandoAvaliacao implements ValidacaoSolicitacaoAdocao {
 
     @Autowired
     private AdocaoRepository adocaoRepository;
 
     public void validar(SolicitacaoAdocaoDto solicitacaoAdocaoDto) {
-        int quantidadeDeAdocoesAprovadasDoTutor = adocaoRepository.countByTutorIdAndStatus(
+        boolean tutorPossuiAdocaoAguardandoAvaliacao = adocaoRepository.existsByTutorIdAndStatus(
                 solicitacaoAdocaoDto.idTutor(),
-                StatusAdocao.APROVADO);
+                StatusAdocao.AGUARDANDO_AVALIACAO);
 
-        if (quantidadeDeAdocoesAprovadasDoTutor >= 5) {
-            throw new SolicitacaoAdocaoValidacaoException("Tutor chegou ao limite máximo de 5 adoções!");
+        if (tutorPossuiAdocaoAguardandoAvaliacao) {
+            throw new SolicitacaoAdocaoValidacaoException("Tutor já possui outra adoção aguardando avaliação!");
         }
     }
 }

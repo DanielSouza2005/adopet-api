@@ -1,4 +1,4 @@
-package br.com.alura.adopet.api.validation;
+package br.com.alura.adopet.api.validation.adocao;
 
 import br.com.alura.adopet.api.dto.SolicitacaoAdocaoDto;
 import br.com.alura.adopet.api.exception.SolicitacaoAdocaoValidacaoException;
@@ -8,18 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidacaoTutorPossuiAdocaoAguardandoAvaliacao implements ValidacaoSolicitacaoAdocao {
+public class ValidacaoPetComAdocaoEmAndamento implements ValidacaoSolicitacaoAdocao {
 
     @Autowired
     private AdocaoRepository adocaoRepository;
 
     public void validar(SolicitacaoAdocaoDto solicitacaoAdocaoDto) {
-        boolean tutorPossuiAdocaoAguardandoAvaliacao = adocaoRepository.existsByTutorIdAndStatus(
-                solicitacaoAdocaoDto.idTutor(),
-                StatusAdocao.AGUARDANDO_AVALIACAO);
+        boolean petPossuiAdocaoEmAndamento = adocaoRepository.existsByPetIdAndStatus(solicitacaoAdocaoDto.idPet(), StatusAdocao.AGUARDANDO_AVALIACAO);
 
-        if (tutorPossuiAdocaoAguardandoAvaliacao) {
-            throw new SolicitacaoAdocaoValidacaoException("Tutor já possui outra adoção aguardando avaliação!");
+        if (petPossuiAdocaoEmAndamento) {
+            throw new SolicitacaoAdocaoValidacaoException("Pet já está aguardando avaliação para ser adotado!");
         }
     }
 }
