@@ -34,17 +34,6 @@ public class TutorService {
     }
 
     public void atualizar(AtualizacaoTutorDto atualizacaoTutorDto) {
-        boolean telefoneJaCadastrado = repository.existsByTelefone(atualizacaoTutorDto.telefone());
-        boolean emailJaCadastrado = repository.existsByEmail(atualizacaoTutorDto.email());
-
-        if (telefoneJaCadastrado) {
-            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse telefone.");
-        }
-
-        if (emailJaCadastrado) {
-            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse email.");
-        }
-
         Tutor tutor = repository.getReferenceById(atualizacaoTutorDto.idTutor());
         tutor.setTelefone(atualizacaoTutorDto.telefone());
         tutor.setEmail(atualizacaoTutorDto.email());
