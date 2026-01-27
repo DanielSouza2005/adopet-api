@@ -33,32 +33,20 @@ public class AbrigoController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastroAbrigoDto cadastroAbrigoDto) {
-        try {
-            service.cadastrar(cadastroAbrigoDto);
-            return ResponseEntity.ok("Abrigo cadastrado com sucesso.");
-        } catch (CadastrarAbrigoValidacaoException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+        service.cadastrar(cadastroAbrigoDto);
+        return ResponseEntity.ok("Abrigo cadastrado com sucesso.");
     }
 
     @GetMapping("/{idOuNome}/pets")
     public ResponseEntity<List<DadosDetalhesPet>> listarPets(@PathVariable String idOuNome) {
-        try {
-            return ResponseEntity.ok(service.listarPets(idOuNome));
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(service.listarPets(idOuNome));
     }
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
     public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid CadastroPetDto cadastroPetDto) {
-        try {
-            service.cadastrarPet(idOuNome, cadastroPetDto);
-            return ResponseEntity.ok("Pet cadastrado com sucesso.");
-        } catch (EntityNotFoundException ex) {
-            return ResponseEntity.notFound().build();
-        }
+        service.cadastrarPet(idOuNome, cadastroPetDto);
+        return ResponseEntity.ok("Pet cadastrado com sucesso.");
     }
 
 }

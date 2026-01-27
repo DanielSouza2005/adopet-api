@@ -22,12 +22,8 @@ public class AdocaoController {
     @PostMapping
     @Transactional
     public ResponseEntity<String> solicitar(@RequestBody @Valid SolicitacaoAdocaoDto solicitacaoAdocaoDto) {
-        try {
-            adocaoService.solicitar(solicitacaoAdocaoDto);
-            return ResponseEntity.ok("Adoção solicitada com sucesso!");
-        } catch (SolicitacaoAdocaoValidacaoException ex) {
-            return ResponseEntity.badRequest().body(ex.getMessage());
-        }
+        adocaoService.solicitar(solicitacaoAdocaoDto);
+        return ResponseEntity.ok("Adoção solicitada com sucesso!");
     }
 
     @PutMapping("/aprovar")
