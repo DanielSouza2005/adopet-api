@@ -1,6 +1,5 @@
 package br.com.alura.adopet.api.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,20 +11,15 @@ public class Tutor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "tutor", fetch = FetchType.EAGER)
-    @JsonManagedReference("tutor_adocoes")
+    @OneToMany(mappedBy = "tutor")
     private List<Adocao> adocoes;
 
     @Override

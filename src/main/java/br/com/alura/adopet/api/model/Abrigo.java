@@ -1,10 +1,6 @@
 package br.com.alura.adopet.api.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,20 +11,15 @@ public class Abrigo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "nome")
     private String nome;
 
-    @Column(name = "telefone")
     private String telefone;
 
-    @Column(name = "email")
     private String email;
 
-    @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference("abrigo_pets")
+    @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
     @Override
