@@ -58,8 +58,8 @@ public class AbrigoService {
         }
     }
 
-    public void cadastrarPet(String idOuNome, CadastroPetDto cadastroPetDto) {
-        Pet pet = petRepository.getReferenceById(cadastroPetDto.idPet());
+    public void cadastrarPet(String idOuNome, Long petId) {
+        Pet pet = petRepository.getReferenceById(petId);
 
         try {
             Long id = Long.parseLong(idOuNome);

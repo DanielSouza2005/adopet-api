@@ -1,5 +1,6 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class Abrigo {
 
     @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL)
     private List<Pet> pets;
+
+    public Abrigo(CadastroAbrigoDto cadastroAbrigoDto) {
+        this.nome = cadastroAbrigoDto.nome();
+        this.telefone = cadastroAbrigoDto.telefone();
+        this.email = cadastroAbrigoDto.email();
+    }
+
+    public Abrigo() {
+    }
 
     @Override
     public boolean equals(Object o) {

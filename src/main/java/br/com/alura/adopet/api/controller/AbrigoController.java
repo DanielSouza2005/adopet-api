@@ -4,12 +4,7 @@ import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
 import br.com.alura.adopet.api.dto.CadastroPetDto;
 import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
 import br.com.alura.adopet.api.dto.DadosDetalhesPet;
-import br.com.alura.adopet.api.exception.CadastrarAbrigoValidacaoException;
-import br.com.alura.adopet.api.model.Abrigo;
-import br.com.alura.adopet.api.model.Pet;
-import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.service.AbrigoService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +39,8 @@ public class AbrigoController {
 
     @PostMapping("/{idOuNome}/pets")
     @Transactional
-    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody @Valid CadastroPetDto cadastroPetDto) {
-        service.cadastrarPet(idOuNome, cadastroPetDto);
+    public ResponseEntity<String> cadastrarPet(@PathVariable String idOuNome, @RequestBody Long petId) {
+        service.cadastrarPet(idOuNome, petId);
         return ResponseEntity.ok("Pet cadastrado com sucesso.");
     }
 
