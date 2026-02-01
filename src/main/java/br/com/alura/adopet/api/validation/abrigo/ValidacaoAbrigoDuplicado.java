@@ -1,23 +1,22 @@
 package br.com.alura.adopet.api.validation.abrigo;
 
 import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
-import br.com.alura.adopet.api.exception.CadastrarAbrigoValidacaoException;
+import br.com.alura.adopet.api.exception.CadastrarTutorValidacaoException;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidacaoAbrigoTelefoneDuplicado implements ValidacaoCadastroAbrigo {
+public class ValidacaoAbrigoDuplicado {
 
     @Autowired
     private AbrigoRepository repository;
 
-    @Override
     public void validar(CadastroAbrigoDto cadastroAbrigoDto) {
-        boolean telefoneJaCadastrado = repository.existsByTelefone(cadastroAbrigoDto.telefone());
+        boolean dadosJaCadastrados = repository.existsByNomeOrTelefoneOrEmail(cadastroAbrigoDto.nome(), cadastroAbrigoDto.telefone(), cadastroAbrigoDto.email());
 
-        if (telefoneJaCadastrado) {
-            throw new CadastrarAbrigoValidacaoException("Abrigo já cadastrado com esse telefone.");
+        if (dadosJaCadastrados) {
+            throw new CadastrarTutorValidacaoException("Abrigo já cadastrado com esses dados.");
         }
     }
 }

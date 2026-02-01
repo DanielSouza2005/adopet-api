@@ -7,17 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidacaoTutorEmailDuplicado implements ValidacaoCadastroTutor {
+public class ValidacaoCadastroTutorDadosDuplicados {
 
     @Autowired
     private TutorRepository repository;
 
     public void validar(CadastroTutorDto cadastroTutorDto) {
-        boolean emailJaCadastrado = repository.existsByEmail(cadastroTutorDto.email());
+        boolean dadosJaCadastrados = repository.existsByTelefoneOrEmail(cadastroTutorDto.telefone(), cadastroTutorDto.email());
 
-        if (emailJaCadastrado) {
-            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esse email.");
+        if (dadosJaCadastrados) {
+            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esses dados. ");
         }
     }
-
 }

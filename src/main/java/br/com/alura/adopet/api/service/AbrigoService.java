@@ -1,14 +1,13 @@
 package br.com.alura.adopet.api.service;
 
 import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
-import br.com.alura.adopet.api.dto.CadastroPetDto;
 import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
 import br.com.alura.adopet.api.dto.DadosDetalhesPet;
 import br.com.alura.adopet.api.model.Abrigo;
 import br.com.alura.adopet.api.model.Pet;
 import br.com.alura.adopet.api.repository.AbrigoRepository;
 import br.com.alura.adopet.api.repository.PetRepository;
-import br.com.alura.adopet.api.validation.abrigo.ValidacaoCadastroAbrigo;
+import br.com.alura.adopet.api.validation.abrigo.ValidacaoAbrigoDuplicado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +23,7 @@ public class AbrigoService {
     private PetRepository petRepository;
 
     @Autowired
-    List<ValidacaoCadastroAbrigo> validacoesCadastroAbrigo;
+    ValidacaoAbrigoDuplicado validacaoAbrigoDuplicado;
 
     public List<DadosDetalhesAbrigo> listar() {
         return repository.findAll()
@@ -34,7 +33,7 @@ public class AbrigoService {
     }
 
     public void cadastrar(CadastroAbrigoDto cadastroAbrigoDto) {
-        validacoesCadastroAbrigo.forEach(v -> v.validar(cadastroAbrigoDto));
+        validacaoAbrigoDuplicado.validar(cadastroAbrigoDto);
 
         Abrigo abrigo = new Abrigo();
         abrigo.setEmail(cadastroAbrigoDto.email());
