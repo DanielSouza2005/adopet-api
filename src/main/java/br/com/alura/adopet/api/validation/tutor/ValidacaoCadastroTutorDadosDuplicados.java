@@ -16,7 +16,7 @@ public class ValidacaoCadastroTutorDadosDuplicados {
         boolean dadosJaCadastrados = repository.existsByTelefoneOrEmail(cadastroTutorDto.telefone(), cadastroTutorDto.email());
 
         if (dadosJaCadastrados) {
-            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esses dados. ");
+            throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esses dados.");
         }
     }
 }
