@@ -1,5 +1,6 @@
 package br.com.alura.adopet.api.model;
 
+import br.com.alura.adopet.api.dto.CadastroTutorDto;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,6 +22,15 @@ public class Tutor {
 
     @OneToMany(mappedBy = "tutor")
     private List<Adocao> adocoes;
+
+    public Tutor() {
+    }
+
+    public Tutor(CadastroTutorDto cadastroTutorDto) {
+        this.nome = cadastroTutorDto.nome();
+        this.telefone = cadastroTutorDto.telefone();
+        this.email = cadastroTutorDto.email();
+    }
 
     @Override
     public boolean equals(Object o) {
