@@ -13,9 +13,11 @@ public class ValidacaoAtualizacaoTutorDadosDuplicados {
     private TutorRepository repository;
 
     public void validar(AtualizacaoTutorDto atualizacaoTutorDto) {
-        boolean dadosJaCadastrados = repository.existsByTelefoneOrEmail(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.email());
+        boolean telefoneDuplicado = repository.existsByTelefoneAndIdNot(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.idTutor());
 
-        if (dadosJaCadastrados) {
+        boolean emailDuplicado = repository.existsByEmailAndIdNot(atualizacaoTutorDto.email(), atualizacaoTutorDto.idTutor());
+
+        if (telefoneDuplicado || emailDuplicado) {
             throw new CadastrarTutorValidacaoException("Tutor já cadastrado com esses dados.");
         }
     }

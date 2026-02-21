@@ -32,6 +32,7 @@ public class Pet {
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
+    @JoinColumn(name = "adocao_id")
     @OneToOne(fetch = FetchType.LAZY)
     private Adocao adocao;
 
