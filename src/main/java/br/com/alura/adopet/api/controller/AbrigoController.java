@@ -1,7 +1,6 @@
 package br.com.alura.adopet.api.controller;
 
 import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
-import br.com.alura.adopet.api.dto.CadastroPetDto;
 import br.com.alura.adopet.api.dto.DadosDetalhesAbrigo;
 import br.com.alura.adopet.api.dto.DadosDetalhesPet;
 import br.com.alura.adopet.api.service.AbrigoService;
