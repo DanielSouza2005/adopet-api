@@ -1,18 +1,15 @@
 package br.com.alura.adopet.api.model;
 
 import br.com.alura.adopet.api.dto.CadastroTutorDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "tutores")
-public class Tutor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Tutor extends BaseEntity {
 
     private String nome;
 
@@ -30,23 +27,6 @@ public class Tutor {
         this.nome = cadastroTutorDto.nome();
         this.telefone = cadastroTutorDto.telefone();
         this.email = cadastroTutorDto.email();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Tutor tutor = (Tutor) o;
-        return Objects.equals(id, tutor.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {

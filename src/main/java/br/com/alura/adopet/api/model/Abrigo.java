@@ -1,18 +1,16 @@
 package br.com.alura.adopet.api.model;
 
 import br.com.alura.adopet.api.dto.CadastroAbrigoDto;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "abrigos")
-public class Abrigo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Abrigo extends BaseEntity {
 
     private String nome;
 
@@ -30,23 +28,6 @@ public class Abrigo {
     }
 
     public Abrigo() {
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Abrigo abrigo = (Abrigo) o;
-        return Objects.equals(id, abrigo.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public void setId(Long id) {
