@@ -28,8 +28,10 @@ class ValidacaoAtualizacaoTutorDadosDuplicadosTest {
     @Test
     void deveriaPermitirAtualizarDadosTutorSemDadosDuplicados() {
         //ARRANGE
-        BDDMockito
-                .given(repository.existsByTelefoneOrEmail(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.email()))
+        BDDMockito.given(repository.existsByTelefoneAndIdNot(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.idTutor()))
+                .willReturn(false);
+
+        BDDMockito.given(repository.existsByEmailAndIdNot(atualizacaoTutorDto.email(), atualizacaoTutorDto.idTutor()))
                 .willReturn(false);
 
         Assertions.assertDoesNotThrow(() -> validacao.validar(atualizacaoTutorDto));
@@ -38,8 +40,10 @@ class ValidacaoAtualizacaoTutorDadosDuplicadosTest {
     @Test
     void naoDeveriaPermitirAtualizarDadosTutorComDadosDuplicados() {
         //ARRANGE
-        BDDMockito
-                .given(repository.existsByTelefoneOrEmail(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.email()))
+        BDDMockito.given(repository.existsByTelefoneAndIdNot(atualizacaoTutorDto.telefone(), atualizacaoTutorDto.idTutor()))
+                .willReturn(true);
+
+        BDDMockito.given(repository.existsByEmailAndIdNot(atualizacaoTutorDto.email(), atualizacaoTutorDto.idTutor()))
                 .willReturn(true);
 
         Assertions.assertThrows(CadastrarTutorValidacaoException.class, () -> validacao.validar(atualizacaoTutorDto));
